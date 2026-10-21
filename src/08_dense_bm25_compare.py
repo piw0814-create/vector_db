@@ -2,6 +2,7 @@ import json
 import numpy as np
 import faiss
 import bm25s
+from bm25_utils import create_bm25_tokenizer
 
 
 QUERY = "HBM이란 무엇인가?"
@@ -67,8 +68,11 @@ for rank, idx in enumerate(
 
 print("\nBM25 인덱스 생성 중...")
 
-corpus_tokens = bm25s.tokenize(
-    texts
+tokenizer = create_bm25_tokenizer()
+
+corpus_tokens = tokenizer.tokenize(
+    texts,
+    update_vocab=True
 )
 
 bm25_index = bm25s.BM25()
@@ -76,8 +80,9 @@ bm25_index.index(
     corpus_tokens
 )
 
-q_tok = bm25s.tokenize(
-    QUERY
+q_tok = tokenizer.tokenize(
+    [QUERY],
+    update_vocab=False
 )
 
 bm25_ids, bm25_scores = bm25_index.retrieve(

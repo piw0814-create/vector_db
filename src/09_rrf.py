@@ -2,6 +2,7 @@ import json
 import numpy as np
 import faiss
 import bm25s
+from bm25_utils import create_bm25_tokenizer
 
 
 QUERY = "HBM이란 무엇인가?"
@@ -51,8 +52,11 @@ dense_ranks = {
 # -----------------------------
 # 2. BM25 Top-K
 # -----------------------------
-corpus_tokens = bm25s.tokenize(
+tokenizer = create_bm25_tokenizer()
+
+corpus_tokens = tokenizer.tokenize(
     texts,
+    update_vocab=True,
     show_progress=False
 )
 
@@ -62,8 +66,9 @@ bm25_index.index(
     show_progress=False
 )
 
-query_tokens = bm25s.tokenize(
-    QUERY,
+query_tokens = tokenizer.tokenize(
+    [QUERY],
+    update_vocab=False,
     show_progress=False
 )
 
