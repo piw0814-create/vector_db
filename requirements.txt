@@ -1,0 +1,11 @@
+pymupdf
+numpy
+faiss-cpu
+qdrant-client
+FlagEmbedding
+bm25s
+langchain-text-splitters
+ragas==0.4.3
+langchain-community==0.4.1
+openai
+python-dotenv
